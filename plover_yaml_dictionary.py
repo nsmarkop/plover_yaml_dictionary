@@ -3,7 +3,7 @@ from typing import Iterable, Tuple
 import ruamel.yaml
 
 from plover.steno_dictionary import StenoDictionary
-from plover.steno import normalize_steno
+from plover.steno import normalize_steno, STROKE_DELIMITER
 
 
 class YAMLDictionary(StenoDictionary):
@@ -42,7 +42,7 @@ class YAMLDictionary(StenoDictionary):
 
         for strokes, translation in sorted(self._dict.items(), key=lambda x: x[1].casefold()):
             # Need to join the multi-stroke entries into one stroke string first
-            stroke = '/'.join(strokes)
+            stroke = STROKE_DELIMITER.join(strokes)
             data.setdefault(translation, []).append(stroke)
             data[translation] = sorted(data[translation])
 
