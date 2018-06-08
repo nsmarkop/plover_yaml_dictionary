@@ -56,13 +56,13 @@ class YAMLDictionary(StenoDictionary):
             yaml.dump(data, out_file)
 
     @staticmethod
-    def load_yaml_file(filename: str) -> Iterable[Tuple[str, str]]:
+    def load_yaml_file(filename: str) -> Iterable[Tuple[Tuple[str], str]]:
         '''
         Loads a YAML dictionary file and provides an iterable to its
         stroke to translation mappings.
 
         :param filename: The file path of the YAML dictionary to load.
-        :return: An iterable that provides tuples of stroke, translation.
+        :return: An iterable that provides tuples of stroke tuple, translation.
         '''
 
         # Load the data. Can't use the round-trip loader for performance reasons
@@ -71,7 +71,7 @@ class YAMLDictionary(StenoDictionary):
         with open(filename, 'r', encoding='utf-8') as in_file:
             data = yaml.load(in_file)
 
-        # Provide stroke, translation tuples
+        # Provide tuples of stroke tuple, translation
         for translation, strokes in data.items():
             for stroke in strokes:
                 yield (normalize_steno(stroke), translation)
